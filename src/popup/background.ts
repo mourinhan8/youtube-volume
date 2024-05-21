@@ -10,8 +10,8 @@ slider.addEventListener("input", function ()
   chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
 	if (tabs[0] && tabs[0].url && (tabs[0].url.startsWith("chrome://") || tabs[0].url.startsWith("https://chromewebstore.google.com/")))
 		return ;
-	volume.innerHTML = this.value;
-	const finalValue = Number(this.value) / 100;
+		volume.innerHTML = this.value;
+		const finalValue = Number(this.value) / 100;
 	
     const myTabId = tabs[0].id;
 
@@ -56,16 +56,16 @@ slider.addEventListener("input", function ()
 			}
 			analyser.getByteFrequencyData(dataArray);
       const averageVolume = getAverageVolume(dataArray);
+			console.log(averageVolume)
       // Check the threshold
       if (averageVolume > volume) {
         videoElement.volume = Math.max(videoElement.volume - 0.1, 0); // down volume
-      } else if (averageVolume < volume) { // Giá trị ngưỡng ví dụ
+      } else if (averageVolume < volume) {
         videoElement.volume = Math.min(videoElement.volume + 0.1, 1); // up volume
       }
 			requestAnimationFrame(changeVolume);
 		}
 		
-		// Function to simulate a click on the YouTube mute button
 	}
 
 	function getAverageVolume (array: Uint8Array) {
