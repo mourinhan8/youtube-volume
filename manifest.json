@@ -1,0 +1,32 @@
+{
+		"manifest_version": 3,
+		"name": "YouTube Volume",
+		"version": "1.0.0",
+		"description": "Adjust YouTube volume around a fixed threshold",
+		"icons":
+		{
+			"16":"assets/logo.png",
+			"32":"assets/logo.png",
+			"48":"assets/logo.png",
+			"128":"assets/logo.png"
+		},
+		"action":
+		{
+			"default_popup": "dist/index.html",
+			"default_title": "EasyVolume - Precise Volume Control for YouTube"
+		},
+		"permissions":
+		[
+			"scripting", "activeTab", "declarativeContent"
+		],
+		"host_permissions":
+		[
+			"http://*/*",
+			"https://*/*"
+		],
+		"background":
+		{
+			"js": "dist/popup/background.js"
+		},
+		"author":"https://github.com/spookier"
+}
