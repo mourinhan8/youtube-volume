@@ -28,5 +28,10 @@
 		{
 			"js": "dist/popup/background.js"
 		},
-		"author":"https://github.com/spookier"
+		"content_scripts": [
+			{
+					"matches": ["<all_urls>"],
+					"js": ["dist/contentScript.js"]
+			}
+	]
 }
