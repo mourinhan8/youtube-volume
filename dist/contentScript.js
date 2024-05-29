@@ -7,42 +7,25 @@
     source.connect(analyser);
     analyser.connect(audioContext.destination);
     analyser.fftSize = 256;
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    function getAverageVolume(array) {
-        let values = 0;
-        let average;
-        for (let i = 0; i < array.length; i++) {
-            values += array[i];
-        }
-        average = values / array.length;
-        return average;
-    }
+    const gainNode = audioContext.createGain();
+    source.connect(gainNode).connect(audioContext.destination);
     chrome.runtime.onMessage.addListener((request) => {
         if (request.action === "adjustVolume") {
-            const targetVolume = request.volume;
-            function checkVolume() {
-                analyser.getByteFrequencyData(dataArray);
-                const averageVolume = getAverageVolume(dataArray);
-                console.log('Average Volume:', averageVolume);
-                if (averageVolume > targetVolume) {
-                    video.volume = Math.max(video.volume - 0.01, 0);
-                }
-                else if (averageVolume < targetVolume) {
-                    video.volume = Math.min(video.volume + 0.01, 1);
-                }
-                requestAnimationFrame(checkVolume);
+            const targetVolume = request.volume / 100;
+            function changeVolume() {
+                gainNode.gain.value = targetVolume;
+                requestAnimationFrame(changeVolume);
             }
             if (video.paused) {
                 video.addEventListener('play', () => {
                     audioContext.resume().then(() => {
-                        checkVolume();
+                        changeVolume();
                     });
                 }, { once: true });
             }
             else {
                 audioContext.resume().then(() => {
-                    checkVolume();
+                    changeVolume();
                 });
             }
         }

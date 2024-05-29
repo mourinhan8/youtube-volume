@@ -13,7 +13,7 @@
 		"action":
 		{
 			"default_popup": "dist/index.html",
-			"default_title": "Auto-Adjust volume on YouTube"
+			"default_title": "EasyVolume - Precise Volume Control for YouTube"
 		},
 		"permissions":
 		[
